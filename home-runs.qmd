@@ -1,0 +1,54 @@
+---
+title: "Home runs"
+---
+
+```{r}
+#| cache: true
+#| message: false
+library(tidyverse)
+library(Lahman)
+
+hr_by_season <- Teams |>
+	group_by(yearID) |>
+	summarise(
+		total_home_runs = sum(HR, na.rm = TRUE),
+		total_team_games = sum(G, na.rm = TRUE)
+	) |>
+	mutate(
+		home_runs_per_game = total_home_runs / total_team_games,
+		season_type = factor(
+			if_else(
+				yearID %in% c(1918, 1919, 1981, 1994, 1995, 2020),
+				"Shortened season",
+				"Full season"
+			),
+			levels = c("Full season", "Shortened season")
+		)
+	)
+```
+
+```{r}
+ggplot(hr_by_season, aes(x = yearID, y = home_runs_per_game)) +
+	geom_line(aes(color = season_type)) +
+	scale_color_manual(
+		values = c("Full season" = "#6b7280", "Shortened season" = "#d94841")
+	) +
+	labs(
+		title = "Home Runs per Team-Game Across MLB History",
+		x = "Season",
+		y = "Home runs per team-game",
+		color = "Season type",
+		caption = "Source: Lahman database"
+	)
+```
+
+```{r}
+season_comparison <- hr_by_season |>
+	filter(yearID %in% c(2019, 1981, 1994, 2020)) |>
+	select(yearID, total_home_runs, total_team_games, home_runs_per_game) |>
+	arrange(match(yearID, c(2019, 1981, 1994, 2020)))
+
+knitr::kable(season_comparison, digits = 3)
+```
+
+# Home runs
