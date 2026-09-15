@@ -4,4 +4,6 @@ title: "Baseball"
 
 # Baseball Through Data
 
-Explore the history of Major League Baseball through its data. This site uses the Lahman database to examine the players, teams, and seasons that shaped the game.
+Explore the history of Major League Baseball through its data. Using the Lahman database, this site follows home runs across seasons and asks what changes when shortened seasons are compared by home runs per team-game instead of by raw totals. The rate-based view makes those apparent collapses look much more ordinary once the number of games is taken into account.
+
+The site also looks at the players who made the biggest mark over their careers, from the all-time home run leaders to Barry Bonds's season-by-season record. Visit the **Home runs** and **Sluggers** pages in the navbar to explore the analysis.
