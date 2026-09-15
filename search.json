@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Baseball",
+    "section": "",
+    "text": "Baseball Through Data\nExplore the history of Major League Baseball through its data. Using the Lahman database, this site follows home runs across seasons and asks what changes when shortened seasons are compared by home runs per team-game instead of by raw totals. The rate-based view makes those apparent collapses look much more ordinary once the number of games is taken into account.\nThe site also looks at the players who made the biggest mark over their careers, from the all-time home run leaders to Barry Bonds’s season-by-season record. Visit the Home runs and Sluggers pages in the navbar to explore the analysis."
+  },
+  {
+    "objectID": "home-runs.html",
+    "href": "home-runs.html",
+    "title": "Home runs",
+    "section": "",
+    "text": "yearID\ntotal_home_runs\ntotal_team_games\nhome_runs_per_game\n\n\n\n\n2019\n6776\n4858\n1.395\n\n\n1981\n1781\n2788\n0.639\n\n\n1994\n3306\n3200\n1.033\n\n\n2020\n2304\n1796\n1.283\n\n\n\n\n\n\nHome runs"
+  }
+]
