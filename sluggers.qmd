@@ -1,0 +1,72 @@
+---
+title: "Sluggers"
+---
+
+```{r}
+#| message: false
+library(tidyverse)
+library(Lahman)
+
+career_home_runs <- Batting |>
+	group_by(playerID) |>
+	summarise(
+		career_home_runs = sum(HR, na.rm = TRUE),
+		first_season = min(yearID),
+		last_season = max(yearID),
+		.groups = "drop"
+	) |>
+	inner_join(
+		People |>
+			select(playerID, nameFirst, nameLast),
+		by = "playerID"
+	) |>
+	mutate(
+		player = str_c(nameFirst, nameLast, sep = " "),
+		seasons_played = str_c(first_season, last_season, sep = "-"),
+		steroid_era_status = factor(
+			if_else(
+				last_season >= 1994 & first_season <= 2009,
+				"Active during steroid era",
+				"Not active during steroid era"
+			),
+			levels = c(
+				"Active during steroid era",
+				"Not active during steroid era"
+			)
+		),
+		player = fct_reorder(player, career_home_runs)
+	) |>
+	arrange(desc(career_home_runs)) |>
+	slice_head(n = 15) |>
+	select(player, career_home_runs, seasons_played, steroid_era_status)
+
+ggplot(career_home_runs, aes(x = career_home_runs, y = player)) +
+	geom_col(aes(fill = steroid_era_status)) +
+	scale_fill_manual(
+		values = c(
+			"Active during steroid era" = "#d94841",
+			"Not active during steroid era" = "#6b7280"
+		)
+	) +
+	labs(
+		title = "Career Home Run Leaders by Steroid-Era Activity",
+		x = "Career home runs",
+		y = "Player",
+		fill = "Steroid-era activity",
+		caption = "Source: Lahman database"
+	)
+
+bonds_home_runs <- Batting |>
+	filter(playerID == "bondsba01") |>
+	group_by(yearID) |>
+	summarise(home_runs = sum(HR, na.rm = TRUE), .groups = "drop")
+
+ggplot(bonds_home_runs, aes(x = yearID, y = home_runs)) +
+	geom_col(fill = "#d94841") +
+	labs(
+		title = "Barry Bonds: Home Runs by Season",
+		x = "Season",
+		y = "Home runs",
+		caption = "Source: Lahman database"
+	)
+```
